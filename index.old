@@ -1,0 +1,53 @@
+let orderId = 0;
+
+const menu = [
+  { name: "Cheese", price: 10.00 },
+  { name: "Margherita", price: 11.00 },
+  { name: "Pepperoni", price: 13.00 },
+  { name: "Hawaiian", price: 15.00 },
+  { name: "Veggie", price: 13.00 },
+];
+
+let cash = 100.00;
+let orderQueue = [];
+
+// Adds a new pizza to the menu
+const addNewPizza = (pizzaObj) => {
+  menu.push(pizzaObj);
+};
+
+// Places an order for a pizza
+const placeOrder = (pizzaName) => {
+  const pizza = menu.find(pizza => pizza.name === pizzaName); // find pizza by name
+  if (pizza) {
+    cashInRegister += pizza.price; // add to cash register
+    const newOrder = { id: orderId, pizza: pizza, status: "ordered" }; // create order object
+    orderId++; // increment order id
+    orderQueue.push(newOrder); // add order to queue
+    return newOrder; // return order object
+  }
+  return null;
+};
+
+const completeOrder = (orderId) => {
+  const completedOrder = orderQueue.find(order => order.id === orderId)
+  if (completedOrder) {
+    completedOrder.status = "completed";
+    return completedOrder;
+  }
+  return null;
+};
+
+addNewPizza({ name: "Meat Lovers", price: 15.00 });
+addNewPizza({ name: "Vegan", price: 14.00 });
+addNewPizza({ name: "BBQ Chicken", price: 16.00 });
+
+placeOrder("Cheese");
+placeOrder("Margherita");
+placeOrder("Vegan");
+
+completeOrder(0);
+
+console.log("menu:", menu);
+console.log("cash:", cashInRegister);
+console.log("orderQueue:", orderQueue);
